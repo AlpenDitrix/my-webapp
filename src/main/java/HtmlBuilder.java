@@ -4,7 +4,7 @@
  * Date: 02.11.13
  * Time: 4:36
  */
-public class HtmlBuilder {
+class HtmlBuilder {
 
     private static final String pagePost;
     private static final String pageGet;
@@ -19,7 +19,7 @@ public class HtmlBuilder {
         sb.append("<FORM ACTION=\"/my-webapp/\"");
         sb.append("METHOD=\"POST\">");
         sb.append("А можно ли мне ");
-        sb.append("<INPUT TYPE=\"TEXT\" NAME=\"quest\" onfocus=\"this.value=\'\'\" onblur=\"if (this.value==\'\'));");
+        sb.append("<INPUT TYPE=\"TEXT\" NAME=\"quest\" onfocus=\"this.value=\'\'\" onblur=\"if (this.value==\'\'))");
         sb.append("this.value=\'не программировать\'\" VALUE=\"не программировать\"><BR>");
         sb.append("<INPUT TYPE=\"SUBMIT\" VALUE=\"Воспрашать!\"></FORM>");
 
