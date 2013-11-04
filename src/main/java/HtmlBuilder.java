@@ -3,7 +3,6 @@
  * User: Alpen Ditrix
  * Date: 02.11.13
  * Time: 4:36
- * To change this template use File | Settings | File Templates.
  */
 public class HtmlBuilder {
 
@@ -38,11 +37,11 @@ public class HtmlBuilder {
         pagePost = sb.toString();
     }
 
-    public static final String getDefaultPage() {
+    public static String getDefaultPage() {
         return pageGet;
     }
 
-    public static final String getResponseString(String newData) {
+    public static String getResponseString(String newData) {
         return String.format(pagePost, newData);
     }
 
