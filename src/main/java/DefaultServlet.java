@@ -25,14 +25,13 @@ public class DefaultServlet extends HttpServlet {
         PrintWriter out = prepareAndGetWriter(req, resp);
 
         String[] paramValues = req.getParameterValues(HtmlBuilder.QUEST_KEY);
-
         if (paramValues != null && paramValues.length > 0 && !paramValues[0].equals("")) {
             out.println(HtmlBuilder.getResponsePage(paramValues[0]));
-            out.close();
         } else {
             out.println(HtmlBuilder.getDefaultPage());
-            out.close();
         }
+
+        out.close();
     }
 
     @Override

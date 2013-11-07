@@ -13,12 +13,12 @@ public class AnswerGenerator {
 
     private static final List<String> answers = new ArrayList<String>() {
         {
-            answers.add(Messages.getString("DefaultReplyGenerator.answer_chaotic_good"));
-            answers.add(Messages.getString("DefaultReplyGenerator.answer_neutral_good"));
-            answers.add(Messages.getString("DefaultReplyGenerator.answer_true_neutral"));
-            answers.add(Messages.getString("DefaultReplyGenerator.answer_lawful_good"));
-            answers.add(Messages.getString("DefaultReplyGenerator.answer_lawful_evil"));
-            answers.add(Messages.getString("DefaultReplyGenerator.answer_chaotic_evil"));
+            add(Messages.getString("DefaultReplyGenerator.answer_chaotic_good"));
+            add(Messages.getString("DefaultReplyGenerator.answer_neutral_good"));
+            add(Messages.getString("DefaultReplyGenerator.answer_true_neutral"));
+            add(Messages.getString("DefaultReplyGenerator.answer_lawful_good"));
+            add(Messages.getString("DefaultReplyGenerator.answer_lawful_evil"));
+            add(Messages.getString("DefaultReplyGenerator.answer_chaotic_evil"));
         }
     };
 
