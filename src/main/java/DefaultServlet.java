@@ -1,7 +1,3 @@
-import students.DefaultReplyGenerator;
-import students.Messages;
-import students.ReplyGenerator;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,40 +13,39 @@ import java.io.PrintWriter;
  */
 public class DefaultServlet extends HttpServlet {
 
-    private static String printQuestion(final String question) {
-        String questionOut = Messages.getString("App.can_u") + question;
-        if (!questionOut.endsWith("?")) {
-            questionOut += "?";
-        }
-        return questionOut;
-    }
-
-    public void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         resp.setCharacterEncoding("UTF-8");
-        PrintWriter out = resp.getWriter();
-
         req.setCharacterEncoding("UTF-8");
 
-        ReplyGenerator replier = new DefaultReplyGenerator();
+        PrintWriter out = resp.getWriter();
+        boolean closed = false;
 
-        String[] paramValues = req.getParameterValues("quest");
+        String[] paramValues = req.getParameterValues(HtmlBuilder.QUEST_KEY);
 
         if (paramValues != null && paramValues.length > 0) {
             String question = paramValues[0];
-            out.println(HtmlBuilder.getResponseString(printQuestion(question).concat("<br>").concat(replier.generate())));
+            if (!question.equals("")) {
+                out.println(HtmlBuilder.getResponsePage(question));
+                out.close();
+                closed = true;
+            }
         }
-
+        if (!closed) {
+            out.println(HtmlBuilder.getDefaultPage());
+            out.close();
+        }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         resp.setCharacterEncoding("UTF-8");
+
         PrintWriter pw = resp.getWriter();
+
         pw.print(HtmlBuilder.getDefaultPage());
-        pw.flush();
+
         pw.close();
     }
 

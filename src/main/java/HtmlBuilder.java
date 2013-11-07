@@ -1,3 +1,5 @@
+import students.AnswerGenerator;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Alpen Ditrix
@@ -6,8 +8,7 @@
  */
 class HtmlBuilder {
 
-    private static final String pagePost;
-    private static final String pageGet;
+    static final String QUEST_KEY = "q";
 
     static {
         StringBuilder sb = new StringBuilder("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">");
@@ -19,7 +20,9 @@ class HtmlBuilder {
         sb.append("<FORM ACTION=\"/my-webapp/\"");
         sb.append("METHOD=\"POST\">");
         sb.append("А можно ли мне ");
-        sb.append("<INPUT TYPE=\"TEXT\" NAME=\"quest\" onfocus=\"this.value=\'\'\" onblur=\"if (this.value==\'\'))");
+        sb.append("<INPUT TYPE=\"TEXT\" NAME=\"");
+        sb.append(QUEST_KEY);
+        sb.append("\" onfocus=\"this.value=\'\'\" onblur=\"if (this.value==\'\'))");
         sb.append("this.value=\'не программировать\'\" VALUE=\"не программировать\"><BR>");
         sb.append("<INPUT TYPE=\"SUBMIT\" VALUE=\"Воспрашать!\"></FORM>");
 
@@ -27,22 +30,28 @@ class HtmlBuilder {
         sb2.append("</BODY>");
         sb2.append("</HTML>");
 
-        pageGet = sb2.toString();
+        defaultPage = sb2.toString();
 
         sb.append("<BR>%s<BR>");
 
         sb.append("</BODY>");
         sb.append("</HTML>");
 
-        pagePost = sb.toString();
+        responsePage = sb.toString();
     }
+
+    private static final String responsePage;
+    private static final String defaultPage;
 
     public static String getDefaultPage() {
-        return pageGet;
+        return defaultPage;
     }
 
-    public static String getResponseString(String newData) {
-        return String.format(pagePost, newData);
+    public static String getResponsePage(String question) {
+        return String.format(responsePage, createAnswer(question));
     }
 
+    private static String createAnswer(String question) {
+        return AnswerGenerator.printQuestion(question).concat("<br>").concat(AnswerGenerator.generateReply());
+    }
 }
