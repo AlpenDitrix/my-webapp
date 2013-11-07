@@ -13,25 +13,23 @@ import java.io.PrintWriter;
  */
 public class DefaultServlet extends HttpServlet {
 
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private static PrintWriter prepareAndGetWriter(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
         resp.setContentType("text/html");
         resp.setCharacterEncoding("UTF-8");
         req.setCharacterEncoding("UTF-8");
+        return resp.getWriter();
+    }
 
-        PrintWriter out = resp.getWriter();
-        boolean closed = false;
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        PrintWriter out = prepareAndGetWriter(req, resp);
 
         String[] paramValues = req.getParameterValues(HtmlBuilder.QUEST_KEY);
 
-        if (paramValues != null && paramValues.length > 0) {
-            String question = paramValues[0];
-            if (!question.equals("")) {
-                out.println(HtmlBuilder.getResponsePage(question));
-                out.close();
-                closed = true;
-            }
-        }
-        if (!closed) {
+        if (paramValues != null && paramValues.length > 0 && !paramValues[0].equals("")) {
+            out.println(HtmlBuilder.getResponsePage(paramValues[0]));
+            out.close();
+        } else {
             out.println(HtmlBuilder.getDefaultPage());
             out.close();
         }
@@ -39,14 +37,11 @@ public class DefaultServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        resp.setCharacterEncoding("UTF-8");
+        PrintWriter out = prepareAndGetWriter(req, resp);
 
-        PrintWriter pw = resp.getWriter();
+        out.print(HtmlBuilder.getDefaultPage());
 
-        pw.print(HtmlBuilder.getDefaultPage());
-
-        pw.close();
+        out.close();
     }
 
 }
